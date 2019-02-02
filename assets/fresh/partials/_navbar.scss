@@ -33,6 +33,9 @@ Navbar
             }
         }
     }
+    .navbar-title{
+      align-self: center;
+    }
     .navbar-end {
         align-items: center;
     }
@@ -110,6 +113,6 @@ Navbar
     z-index: 100;
     box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.12);
     &.is-active {
-        transform: translateY(0); 
+        transform: translateY(0);
     }
 }
