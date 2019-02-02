@@ -1,9 +1,7 @@
-{{- $navbar         := .Site.Params.navbar }}
-{{- $sidebarVisible := .Site.Params.sidebar }}
-{{ if .Params.sidebar }}
-{{ $sidebarVisible = .Params.sidebar }}
-{{ end }}
-{{- $navbarLogo     := .Site.Params.navbarlogo }}
+{{ if .Site.Params.navbar.visible | default true}}
+
+{{- $sidebarVisible := .Site.Params.sidebar.visible }}
+{{- $navbarLogo     := .Site.Params.navbar.logo }}
 <nav class="navbar is-fresh is-transparent no-shadow" role="navigation" aria-label="main navigation">
   <div class="container">
     <div class="navbar-brand">
@@ -51,34 +49,41 @@
         {{- end }}
 
         <div class="navbar-end">
-          {{- range $navbar }}
-          {{- if .sublinks }}
+
+          {{- range .Site.Menus.main }}
+          {{- if .HasChildren }}
           <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link">
-              {{ .title }}
+              {{ .Title }}
             </a>
 
             <div class="navbar-dropdown">
-              {{- range .sublinks }}
-              <a href="{{ .url }}" class="navbar-item">
-                {{ .title }}
+              {{- range .Children }}
+              <a href="{{ .URL }}" class="navbar-item">
+                {{ .Title }}
               </a>
               {{- end }}
             </div>
           </div>
-          {{- else if .button }}
-          <a href="{{ .url }}" class="navbar-item">
-            <span class="button signup-button rounded secondary-btn raised">
-              {{ .title }}
-            </span>
-          </a>
           {{- else }}
-          <a href="{{ .url }}" class="navbar-item is-secondary">
-            {{ .title }}
+          <a href="{{ .URL }}" class="navbar-item is-secondary">
+            {{ .Title }}
           </a>
           {{- end }}
           {{- end }}
+
+          {{/* Add navigation button (like Sign Up button) to the end */}}
+          {{ with .Site.Params.navbar.button }}
+            <a href="{{ .url }}" class="navbar-item">
+              <span class="button signup-button rounded secondary-btn raised">
+                {{ .title }}
+              </span>
+            </a>
+          {{ end }}
+
         </div>
       </div>
   </div>
 </nav>
+
+{{ end }}

@@ -1,26 +1,26 @@
-{{- $sidebar  := .Site.Params.sidebar }}
-{{- $logo     := index $sidebar "logo" }}
-{{- $sections := index $sidebar "sections" }}
+{{- $sidebar  := .Site.Menus.sidebar }}
+{{- $logo     := .Site.Params.sidebar.logo }}
+
 <div class="sidebar">
   <div class="sidebar-header">
-    <img src="{{ printf "/images/logos/%s.svg" $logo | relURL }}">
+    <img src="{{ printf "/images/logos/%s" $logo | relURL }}">
     <a class="sidebar-close" href="javascript:void(0);">
       <i data-feather="x"></i>
     </a>
   </div>
   <div class="inner">
     <ul class="sidebar-menu">
-      {{- range $sections }}
+      {{- range .Site.Menus.sidebar }}
       <li class="have-children">
         <a href="#">
-          <span class="fa fa-{{ .icon }}"></span>
-          {{ .title }}
+          <span class="fa fa-<icon>"></span>
+          {{ .Title }}
         </a>
         <ul>
-          {{- range .links }}
+          {{- range .Children }}
           <li>
-            <a href="{{ .url }}">
-              {{ .text }}
+            <a href="{{ .URL }}">
+              {{ .Title }}
             </a>
           </li>
           {{- end }}
