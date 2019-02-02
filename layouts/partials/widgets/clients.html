@@ -1,29 +1,30 @@
-{{- $section4 := .Site.Params.section4 }}
-{{- $title    := index $section4 "title" }}
-{{- $subtitle := index $section4 "subtitle" }}
-{{- $clients  := index $section4 "clients" }}
+<!-- clients widget -->
+
+{{ $ := .root }}
+{{ $page := .page }}
+
 <section class="section is-medium section-secondary">
   <div class="container">
 
     <div class="title-wrapper has-text-centered">
-      <h2 class="title is-2 light-text is-spaced">{{ $title }}</h2>
-      {{- with $subtitle }}
+      <h2 class="title is-2 light-text is-spaced">{{ $page.Params.title }}</h2>
+      {{- with $page.Params.subtitle }}
       <h3 class="subtitle is-5 light-text">{{ . }}</h3>
       {{- end }}
     </div>
 
     <div class="content-wrapper">
       <div class="columns is-vcentered">
-        {{- range $clients }}
+        {{- range $page.Params.client }}
         <div class="column is-4">
           <figure class="testimonial">
             <blockquote>
               {{ .quote }}
             </blockquote>
             <div class="author">
-              <img src="{{ printf "/images/illustrations/faces/%s.png" (string .img) | relURL }}" alt=""/>
+              <img src="{{ printf "/images/illustrations/faces/%s.png" (string .face) | relURL }}" alt=""/>
               <h5>{{ .name }}</h5>
-              <span>{{ .job }}</span>
+              <span>{{ .job }}{{ with .company }}, {{ . }}{{ end }}</span>
             </div>
           </figure>
         </div>
