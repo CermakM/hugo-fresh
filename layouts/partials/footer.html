@@ -12,24 +12,22 @@
           <img src="{{ printf "/images/logos/%s" $logo | relURL }}">
         </div>
       </div>
-      {{- range $quickLinks }}
-        <div class="column">
-          <div class="footer-column">
-            <div class="footer-header">
-                <h3>{{ .title }}</h3>
-            </div>
-            <ul class="link-list">
-              {{- range .links }}
-              <li>
-                <a href="{{ .link }}">
-                  {{ .text }}
-                </a>
-              </li>
-              {{- end }}
-            </ul>
+
+      {{ range $idx, $col := .Site.Params.footbar.column }}
+      <div class="column">
+        <div class="footer-column ft-{{ $idx }}">
+          <div class="footer-header">
+              <h3>{{ $col.title }}</h3>
           </div>
+          {{ range $col.item }}
+          <ul class="link-list">
+            <li><a href="{{ .link }}">{{ .text }}</a></li>
+          </ul>
+          {{ end }}
         </div>
-      {{- end }}
+      </div>
+      {{ end }}
+
       <div class="column">
         <div class="footer-column">
           <div class="footer-header">
