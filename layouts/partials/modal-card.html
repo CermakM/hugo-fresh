@@ -1,0 +1,27 @@
+{{ $ := index . "root" }}
+
+{{ $target  := index . "target"}}
+{{ $tile  := index . "tile"}}
+
+{{ $section :=  (index . "page").File.BaseFileName }}
+
+<div id="data-{{ $target }}" class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">{{ $tile.title }}</p>
+      <button class="delete" aria-label="close"></button>
+    </header>
+    <section class="modal-card-body">
+      {{ range where (where $.Site.Pages "Section" $section) ".Params.identifier" $target }}
+      <article class="markdown-body">
+      {{ .Content | safeHTML }}
+      </article>
+      {{ end }}
+      {{ template "_internal/pagination.html" . }}
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button is-success">Close</button>
+    </footer>
+  </div>
+</div>

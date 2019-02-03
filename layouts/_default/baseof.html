@@ -4,6 +4,11 @@
     {{ partial "meta.html" . }}
     <title>{{ block "title" . }}{{ .Site.Title }}{{ end }}</title>
     {{ partial "css.html" . }}
+
+    <!-- Custom css files  -->
+    {{ with .Site.Params.custom_css }}
+    {{ range . }} <link rel="stylesheet" type="text/css" href="{{ "/css/" | relURL }}{{ . }}"> {{ end }}
+    {{ end }}
   </head>
   <body>
     <!-- Preloader -->
@@ -53,5 +58,10 @@
     {{ end }}
 
     {{ partial "javascript.html" . }}
+
+    <!-- Custom javascript files  -->
+    {{ with .Site.Params.custom_js }}
+    {{ range . }} <script src="{{ "/js/" | relURL }}{{ . }}"></script> {{ end }}
+    {{ end }}
   </body>
 </html>

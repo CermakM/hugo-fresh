@@ -7,8 +7,8 @@
   <div class="container">
     <div class="navbar-brand">
       {{- if $navbarLogo}}
-      <a class="navbar-item" href="{{ $navbarLogo.link }}">
-        <img src="{{ printf "/images/%s" $navbarLogo.image | relURL }}" alt="" width="112" height="28">
+      <a class="navbar-item" href="/">
+        <img src="{{ printf "/images/logos/%s" $navbarLogo | relURL }}" alt="" width="112" height="28">
       </a>
       {{- end}}
 
@@ -46,7 +46,7 @@
             <button id="cloned-menu-icon-trigger" class="menu-icon-trigger"></button>
           </div>
         </a>
-        
+
         <div class="navbar-title">
           <div class="navbar-item is-hidden-mobile">
           <h3 class="title is-3 is-bold is-spaced">{{ .Site.Title }}</h3>

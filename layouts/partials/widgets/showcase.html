@@ -13,21 +13,34 @@
 
     <div class="content-wrapper">
       <div class="columns is-multiline is-centered">
-        {{- range $page.Params.tile }}
+        {{- range $tile := $page.Params.tile }}
         <div class="column is-one-third">
           <div class="feature-card is-bordered has-text-centered revealOnScroll delay-1" data-animation="fadeInLeft">
             <div class="card-title">
               <h4>{{ .title }}</h4>
             </div>
             <div class="card-icon">
-                <img src="{{ printf "/images/illustrations/icons/%s.svg" .icon | relURL }}">
+                <img src="{{ printf "/images/illustrations/icons/%s" .icon | relURL }}">
             </div>
             <div class="card-text">
                 <p>{{ .text }}</p>
             </div>
+
+            {{ with .button }}
             <div class="card-action">
-              <a href="{{ .url }}" class="button btn-align-md accent-btn raised">{{ .buttonText }}</a>
+              {{ if .modal }}
+              {{ $target := printf "data-%s" (or .target $tile.identifier) }}
+              <button id="btn-{{ $tile.identifier }}" class="button modal-button btn-align-md accent-btn raised" data-target="{{ $target }}" aria-haspopup="true">
+                {{ .text }}
+              </button>
+              {{ else }}
+              <a id="btn-{{ $tile.identifier }}" class="button btn-align-md accent-btn raised" href="{{ .link }}">
+                {{ .text }}
+              </a>
+              {{ end }}
             </div>
+            {{ end }}
+
           </div>
         </div>
         {{- end }}
@@ -35,3 +48,12 @@
     </div>
   </div>
 </section>
+
+{{/* Modals */}}
+{{- range $tile := $page.Params.tile }}
+  {{ with .button }}
+  {{ $target := (or .target $tile.identifier) }}
+  {{ $params := dict "root" $ "page" $page "tile" $tile "target" $target }}
+  {{ if .modal }}{{ partial "modal-card.html" $params }}{{ end }}
+  {{ end }}
+{{- end }}
